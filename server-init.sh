@@ -2,22 +2,6 @@
 
 set -e
 
-user_input_hostname=""
-
-get_user_input () {
-  echo
-  echo "  -> Set HOSTNAME "
-  echo
-  while :; do
-    read -p "" input
-    [[ "$input" != "" ]] && break
-  done
-
-  user_input_hostname=$input
-
-  return 0
-}
-
 update () {
   set +e
   apt update -y
@@ -51,8 +35,7 @@ set_timezone () {
 }
 
 main () {
-  get_user_input \
-    && update \
+  update \
     && update_hostname \
     && set_timezone \
     && return 0
