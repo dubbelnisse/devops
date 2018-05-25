@@ -34,11 +34,10 @@ update_hostname () {
 
 set_timezone () {
   echo "  -> Set Timezone Stockholm"
-  mv /etc/localtime /etc/localtime.bak
-  ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
+  mv /etc/localtime /usr/share/zoneinfo/Etc/
+  ln -s /usr/share/zoneinfo/Etc/GMT+2 /etc/localtime
   return 0
 }
-
 
 main () {
   get_user_input \
