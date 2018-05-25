@@ -27,13 +27,24 @@ update () {
 }
 
 update_hostname () {
-  sed -i "s/^HOST.*/HOSTNAME=$user_input_hostname/" /etc/sysconfig/network
+  hostn=$(cat /etc/hostname)
+  echo "Existing hostname is $hostn"
+
+  echo "Enter new hostname: "
+  read newhost
+
+  sudo sed -i "s/$hostn/$newhost/g" /etc/hosts
+  sudo sed -i "s/$hostn/$newhost/g" /etc/hostname
+  echo "Your new hostname is $newhost"
+
+  service hostname restart
+  service networking restart
 
   return 0
 }
 
 set_timezone () {
-  echo "  -> Set Timezone Stockholm"
+  echo "  -> Set Timezone Sweden"
   mv /etc/localtime /usr/share/zoneinfo/Etc/
   ln -s /usr/share/zoneinfo/Etc/GMT+2 /etc/localtime
   return 0
