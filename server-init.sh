@@ -10,6 +10,13 @@ update () {
   return 0
 }
 
+install_docker () {
+  apt -y install docker
+  chkconfig docker on
+
+  return 0
+}
+
 update_hostname () {
   hostn=$(cat /etc/hostname)
   echo "Existing hostname is $hostn"
@@ -38,6 +45,7 @@ main () {
   update \
     && update_hostname \
     && set_timezone \
+    && install_docker \
     && return 0
 }
 
