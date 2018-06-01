@@ -3,6 +3,8 @@
 set -e
 
 update () {
+  echo "  -> Update system"
+
   set +e
   apt update -y
   set -e
@@ -11,13 +13,16 @@ update () {
 }
 
 install_docker () {
-  apt -y install docker
-  chkconfig docker on
+  echo "  -> Install docker"
+
+  apt -y install docker.io
 
   return 0
 }
 
 update_hostname () {
+  echo "  -> Set hostname"
+
   hostn=$(cat /etc/hostname)
   echo "Existing hostname is $hostn"
 
@@ -36,8 +41,9 @@ update_hostname () {
 
 set_timezone () {
   echo "  -> Set Timezone Sweden"
-  mv /etc/localtime /usr/share/zoneinfo/Etc/
-  ln -s /usr/share/zoneinfo/Etc/GMT+2 /etc/localtime
+
+  timedatectl set-timezone Europe/Stockholm
+
   return 0
 }
 
