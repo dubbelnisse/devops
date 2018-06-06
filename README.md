@@ -42,7 +42,7 @@ ssh -L 8080:localhost:8080 <alias-to-ssh-config>
 ## Configure a new server
 
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/server-init.sh?token=<KEY>" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/server-init.sh?token=ADFVniD-O5coHtrKY2mC-THOcwXNqiusks5bGmeGwA%3D%3D" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
 ```
 
 ## For a new enviroment
@@ -57,7 +57,7 @@ openssl req -new -x509 -days 1095 -key ca.key -sha256 -out ca.crt
 
 Generate key for docker host:
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/cert.sh?token=ADFVnvPW5sagLVZvXuFXByRTmeR3xBytks5bEQ7TwA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/cert.sh?token=ADFVnlXPaaO0_6KdkdftWGGYhlAh67TDks5bGnYYwA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
 ```
 
 Cert them up:
@@ -68,8 +68,11 @@ sudo bash -c "mkdir -p /var/lib/docker/certs && mv /root/{ca,manager}* /var/lib/
 Update docker setup:
 
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/dockerd-certs.sh?token=ADFVnggxZ3hFGUrvlDJ_cGkX9pXFw_h4ks5bEQ_awA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/dockerd-certs.sh?token=ADFVnlfmzd3gbXr7S0hLB8rjvIlhP8rUks5bGnadwA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
 ```
 
 ## init swarm
 docker swarm init
+
+dockerd --tlsverify --tlscacert=ca.crt --tlscert=manager-01.crt --tlskey=manager-01.key \
+  -H=0.0.0.0:2376
