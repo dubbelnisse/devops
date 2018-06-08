@@ -5,9 +5,7 @@ set -e
 update () {
   echo "  -> Update system"
 
-  set +e
   apt update -y
-  set -e
 
   return 0
 }
