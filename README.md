@@ -1,7 +1,7 @@
 ## Configure a new server
 
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/server-init.sh?token=ADFVnm33jxiyQHoutc_esCE_AY3Gc9fVks5bUcEnwA%3D%3D" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/server-init.sh" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
 ```
 
 Then reboot system
@@ -26,7 +26,7 @@ In order to run this script you need to copy the root cert and key to the direct
 
 Generate key and cert for docker host:
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/cert.sh?token=ADFVnsJhUb3p0UhBiigK3-dtGQCAzm4Bks5bUcILwA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/cert.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
 ```
 
 Move cert adn key files:
@@ -36,7 +36,7 @@ sudo bash -c "mkdir -p /var/lib/docker/certs && mv /root/{ca,manager}* /var/lib/
 
 Update docker setup to use cert:
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/docker-certs.sh?token=ADFVnssV0OEGg6dOxOxXbXH6GePrnlnbks5bUcLowA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/docker-certs.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
 ```
 
 ## Docker swarm
