@@ -1,4 +1,54 @@
-# devops
+## Configure a new server
+
+```sh
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/server-init.sh?token=ADFVnm33jxiyQHoutc_esCE_AY3Gc9fVks5bUcEnwA%3D%3D" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
+```
+
+Then reboot system
+```sh
+reboot
+```
+
+## Docker cert setup
+
+### First server
+Generate key:
+```sh
+openssl genrsa -aes256 -out ca.key 4096
+```
+Generate cert:
+```sh
+openssl req -new -x509 -days 1095 -key ca.key -sha256 -out ca.crt
+```
+
+### For all servers
+In order to run this script you need to copy the root cert and key to the directory where you will run this script.
+
+Generate key and cert for docker host:
+```sh
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/cert.sh?token=ADFVnsJhUb3p0UhBiigK3-dtGQCAzm4Bks5bUcILwA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
+```
+
+Move cert adn key files:
+```sh
+sudo bash -c "mkdir -p /var/lib/docker/certs && mv /root/{ca,manager}* /var/lib/docker/certs/ && chmod 770 /var/lib/docker/certs/ && rm ca.key ca.srl -f"
+```
+
+Update docker setup to use cert:
+```sh
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/docker-certs.sh?token=ADFVnssV0OEGg6dOxOxXbXH6GePrnlnbks5bUcLowA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
+```
+
+## Docker swarm
+Create new swarm
+```sh
+docker swarm init --advertise-addr <host>
+```
+
+Join swarm
+```sh
+docker swarm join --token <token> <host>:2377
+```
 
 ## Setup to access Swarm
 
@@ -9,8 +59,8 @@ Get key and cert from lastpass and:
 
 Note: Diffrent keys for test and prod.
 
-1. Create file caKey.pem (called docker cert key in lastpass)
-2. Create file ca.pem (called docker cert in lastpass)
+1. Create file caKey.pem (root key, ca.key)
+2. Create file ca.pem (root cert, ca.crt)
 
 Then you run the following commands:
 ```sh
@@ -29,50 +79,5 @@ Then you run the following commands:
 ```sh
 export DOCKER_TLS_VERIFY=1
 export DOCKER_CERT_PATH=PATH_TO_WHERE_CERT_IS
-export DOCKER_HOST=tcp://<ip>:<port>
+export DOCKER_HOST=tcp://<ip>:2376
 ```
-
-## Connect to service
-
-Setup tunnel to a service
-```sh
-ssh -L 8080:localhost:8080 <alias-to-ssh-config>
-```
-
-## Configure a new server
-
-```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/server-init.sh?token=ADFVniD-O5coHtrKY2mC-THOcwXNqiusks5bGmeGwA%3D%3D" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
-```
-
-## For a new enviroment
-Generate key:
-```sh
-openssl genrsa -aes256 -out ca.key 4096
-```
-Generate cert:
-```sh
-openssl req -new -x509 -days 1095 -key ca.key -sha256 -out ca.crt
-```
-
-Generate key for docker host:
-```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/cert.sh?token=ADFVnlXPaaO0_6KdkdftWGGYhlAh67TDks5bGnYYwA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
-```
-
-Cert them up:
-```sh
-sudo bash -c "mkdir -p /var/lib/docker/certs && mv /root/{ca,manager}* /var/lib/docker/certs/ && chmod 770 /var/lib/docker/certs/ && rm ca.key ca.srl -f"
-```
-
-Update docker setup:
-
-```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/dockerd-certs.sh?token=ADFVnlfmzd3gbXr7S0hLB8rjvIlhP8rUks5bGnadwA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
-```
-
-## init swarm
-docker swarm init
-
-dockerd --tlsverify --tlscacert=ca.crt --tlscert=manager-01.crt --tlskey=manager-01.key \
-  -H=0.0.0.0:2376
