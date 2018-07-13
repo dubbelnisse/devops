@@ -1,7 +1,10 @@
+# Docker swarm setup
+This repo contains setup instructions and scripts to setup a docker swarm environment on Ubuntu server.
+
 ## Configure a new server
 
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/server-init.sh" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/server-init.sh?token=ADFVnjQtyFIn-3-MiBZzPBAQBZS-R0Ciks5bUdoLwA%3D%3D" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
 ```
 
 Then reboot system
@@ -26,17 +29,17 @@ In order to run this script you need to copy the root cert and key to the direct
 
 Generate key and cert for docker host:
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/cert.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/cert.sh?token=ADFVnqSOugC29blPJZPtpHPLghqurVAOks5bUdp_wA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "worker-01"
 ```
 
 Move cert adn key files:
 ```sh
-sudo bash -c "mkdir -p /var/lib/docker/certs && mv /root/{ca,manager}* /var/lib/docker/certs/ && chmod 770 /var/lib/docker/certs/ && rm ca.key ca.srl -f"
+sudo bash -c "mkdir -p /var/lib/docker/certs && mv /root/{ca,worker}* /var/lib/docker/certs/ && chmod 770 /var/lib/docker/certs/ && rm ca.key ca.srl -f"
 ```
 
 Update docker setup to use cert:
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/docker-certs.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
+wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/docker-certs.sh?token=ADFVnpX10PLvJTDvo_rwauhSNZ2J5kV5ks5bUdqQwA%3D%3D" -O cert.sh && chmod +x cert.sh && ./cert.sh "worker-01"
 ```
 
 ## Docker swarm
@@ -48,6 +51,11 @@ docker swarm init --advertise-addr <host>
 Join swarm
 ```sh
 docker swarm join --token <token> <host>:2377
+```
+
+Forgot token?
+```sh
+docker swarm join-token <manager/worker>
 ```
 
 ## Setup to access Swarm
