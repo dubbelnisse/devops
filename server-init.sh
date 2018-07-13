@@ -37,18 +37,9 @@ update_hostname () {
   return 0
 }
 
-set_timezone () {
-  echo "  -> Set Timezone Sweden"
-
-  timedatectl set-timezone Europe/Stockholm
-
-  return 0
-}
-
 main () {
   update \
     && update_hostname \
-    && set_timezone \
     && install_docker \
     && return 0
 }
