@@ -4,7 +4,7 @@ This repo contains setup instructions and scripts to setup a docker swarm enviro
 ## Configure a new server
 
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/server-init.sh" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
+wget "https://github.com/dubbelnisse/docker-swarm-setup/master/server-init.sh" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
 ```
 
 Then reboot system
@@ -29,7 +29,7 @@ In order to run this script you need to copy the root cert and key to the direct
 
 Generate key and cert for docker host:
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/cert.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "worker-01"
+wget "https://github.com/dubbelnisse/docker-swarm-setup/master/cert.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "worker-01"
 ```
 
 Move cert adn key files:
@@ -39,7 +39,7 @@ sudo bash -c "mkdir -p /var/lib/docker/certs && mv /root/{ca,worker}* /var/lib/d
 
 Update docker setup to use cert:
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/devops/master/docker-certs.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "worker-01"
+wget "https://github.com/dubbelnisse/docker-swarm-setup/master/docker-certs.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "worker-01"
 ```
 
 ## Docker swarm
