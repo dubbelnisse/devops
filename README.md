@@ -4,7 +4,7 @@ This repo contains setup instructions and scripts to setup a docker swarm enviro
 ## Configure a new server
 
 ```sh
-wget "https://raw.githubusercontent.com/docker-swarm-setup/master/server-init.sh" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
+wget "https://raw.githubusercontent.com/dubbelnisse/docker-swarm-setup/master/server-init.sh" -O server-init.sh && chmod +x server-init.sh && sudo ./server-init.sh && rm server-init.sh
 ```
 
 Then reboot system
