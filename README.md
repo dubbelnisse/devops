@@ -29,17 +29,17 @@ In order to run this script you need to copy the root cert and key to the direct
 
 Generate key and cert for docker host:
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/docker-swarm-setup/master/cert.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
+wget "https://raw.githubusercontent.com/dubbelnisse/docker-swarm-setup/master/cert.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "<hostname>"
 ```
 
 Move cert adn key files:
 ```sh
-sudo bash -c "mkdir -p /var/lib/docker/certs && mv /root/{ca,manager}* /var/lib/docker/certs/ && chmod 770 /var/lib/docker/certs/ && rm ca.key ca.srl -f"
+sudo bash -c "mkdir -p /var/lib/docker/certs && mv /root/{ca,<hostname>}* /var/lib/docker/certs/ && chmod 770 /var/lib/docker/certs/ && rm ca.key ca.srl -f"
 ```
 
 Update docker setup to use cert:
 ```sh
-wget "https://raw.githubusercontent.com/dubbelnisse/docker-swarm-setup/master/docker-certs.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "manager-01"
+wget "https://raw.githubusercontent.com/dubbelnisse/docker-swarm-setup/master/docker-certs.sh" -O cert.sh && chmod +x cert.sh && ./cert.sh "<hostname>"
 ```
 
 ## Docker swarm
@@ -62,11 +62,6 @@ docker swarm join-token <manager/worker>
 
 ### Create personal docker certificate
 Create cert on local machine:
-
-Get key and cert from lastpass and:
-
-Note: Diffrent keys for test and prod.
-
 1. Create file caKey.pem (root key, ca.key)
 2. Create file ca.pem (root cert, ca.crt)
 
